@@ -14,10 +14,10 @@ namespace MaandelijkseLonenPW1
         string rijksregisternummer;
         DateTime datumVanIndiesttreding;
         string iban;
-        int startloon = 1900;
+        int startloon;
 
         public Werknemer(string naam, string geslacht, DateTime geboorteDatum, string rijksregisternummer, string iban,
-            DateTime datumVanIndiesttreding)
+            DateTime datumVanIndiesttreding, int startloon = 1900)
         {
             this.naam = naam;
             this.geslacht = geslacht;
@@ -25,9 +25,10 @@ namespace MaandelijkseLonenPW1
             this.rijksregisternummer = rijksregisternummer;
             this.datumVanIndiesttreding = datumVanIndiesttreding;
             this.iban = iban;
+            this.startloon = startloon;
         }
 
-        public double StartloonBerekening(int gepresteerdeUren = 38)
+        public virtual double StartloonBerekening(int gepresteerdeUren = 38)
         {
             return gepresteerdeUren/38 * startloon;
         }
@@ -46,7 +47,6 @@ namespace MaandelijkseLonenPW1
 
         public double Ancienniteit(int gepresteerdeUren = 38)
         {
-
             return LoonNaAncienniteitBerekening(gepresteerdeUren) - StartloonBerekening(gepresteerdeUren);
         }
 
@@ -55,7 +55,7 @@ namespace MaandelijkseLonenPW1
             return LoonNaAncienniteitBerekening(gepresteerdeUren) - 200;
         }
 
-        public double Bedrijfsvoorheffing( int gepresteerdeUren = 38)
+        public virtual double Bedrijfsvoorheffing( int gepresteerdeUren = 38)
         {
             return LoonNaSocialeZekerheid(gepresteerdeUren) * 0.1368;
         }
