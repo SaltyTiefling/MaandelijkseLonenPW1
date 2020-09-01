@@ -12,12 +12,13 @@ namespace MaandelijkseLonenPW1
         string geslacht;
         DateTime geboorteDatum;
         string rijksregisternummer;
-        DateTime datumVanIndiesttreding;
+        public DateTime datumVanIndiesttreding;
         string iban;
-        int startloon;
+        double startloon;
+        public int gepresteerdeUren;
 
         public Werknemer(string naam, string geslacht, DateTime geboorteDatum, string rijksregisternummer, string iban,
-            DateTime datumVanIndiesttreding, int startloon = 1900)
+            DateTime datumVanIndiesttreding, double startloon = 1900, int gepresteerdeUren = 38)
         {
             this.naam = naam;
             this.geslacht = geslacht;
@@ -26,16 +27,17 @@ namespace MaandelijkseLonenPW1
             this.datumVanIndiesttreding = datumVanIndiesttreding;
             this.iban = iban;
             this.startloon = startloon;
+            this.gepresteerdeUren = gepresteerdeUren; 
         }
 
-        public virtual double StartloonBerekening(int gepresteerdeUren = 38)
+        public virtual double StartloonBerekening()
         {
             return gepresteerdeUren/38 * startloon;
         }
 
-        public double LoonNaAncienniteitBerekening(int gepresteerdeUren = 38)
+        public virtual double LoonNaAncienniteitBerekening()
         {
-            double ancienniteit = StartloonBerekening(gepresteerdeUren);
+            double ancienniteit = StartloonBerekening();
 
             for (int i = 1; i <= (DateTime.Now.Year - datumVanIndiesttreding.Year); i++)
             {
@@ -45,24 +47,29 @@ namespace MaandelijkseLonenPW1
             return ancienniteit;
         }
 
-        public double Ancienniteit(int gepresteerdeUren = 38)
+        public double Ancienniteit()
         {
-            return LoonNaAncienniteitBerekening(gepresteerdeUren) - StartloonBerekening(gepresteerdeUren);
+            return LoonNaAncienniteitBerekening() - StartloonBerekening();
         }
 
-        public double LoonNaSocialeZekerheid(int gepresteerdeUren = 38)
+        public double LoonNaSocialeZekerheid()
         {
-            return LoonNaAncienniteitBerekening(gepresteerdeUren) - 200;
+            return LoonNaAncienniteitBerekening() - 200;
         }
 
-        public virtual double Bedrijfsvoorheffing( int gepresteerdeUren = 38)
+        public virtual double Bedrijfsvoorheffing( )
         {
-            return LoonNaSocialeZekerheid(gepresteerdeUren) * 0.1368;
+            return LoonNaSocialeZekerheid() * 0.1368;
         }
 
-        public double BerekenNettoLoon(int gepresteerdeUren = 38)
+        public virtual double BerekenNettoLoon()
         {
-            return LoonNaSocialeZekerheid(gepresteerdeUren) - Bedrijfsvoorheffing(gepresteerdeUren);
+            return LoonNaSocialeZekerheid() - Bedrijfsvoorheffing();
+        }
+
+        public override string ToString()
+        {
+            return $"{naam} ({ this.GetType().Name})";
         }
     }
 }
