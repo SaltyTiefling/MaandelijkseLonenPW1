@@ -340,8 +340,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.MinimumSize = new System.Drawing.Size(298, 388);
             this.Name = "WerknemerForm";
-            this.Text = "NIeuweWerknemer";
+            this.Text = "Nieuwe Werknemer";
             this.Load += new System.EventHandler(this.WerknemerForm_Load);
             this.gbGeslacht.ResumeLayout(false);
             this.gbGeslacht.PerformLayout();

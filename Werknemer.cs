@@ -64,10 +64,13 @@ namespace MaandelijkseLonenPW1
         {
             return LoonNaSocialeZekerheid() * 0.1368;
         }
-
-        public virtual double BerekenNettoLoon()
+        public double LoonNaBedrijfsvoorheffing()
         {
             return LoonNaSocialeZekerheid() - Bedrijfsvoorheffing();
+        }
+        public virtual double BerekenNettoLoon()
+        {
+            return LoonNaBedrijfsvoorheffing();
         }
 
         public override string ToString()

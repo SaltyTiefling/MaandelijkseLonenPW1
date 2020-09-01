@@ -44,13 +44,13 @@
             this.lbxWerknemers.FormattingEnabled = true;
             this.lbxWerknemers.Location = new System.Drawing.Point(16, 29);
             this.lbxWerknemers.Name = "lbxWerknemers";
-            this.lbxWerknemers.Size = new System.Drawing.Size(227, 160);
+            this.lbxWerknemers.Size = new System.Drawing.Size(175, 160);
             this.lbxWerknemers.TabIndex = 0;
             // 
             // btnMaakAan
             // 
             this.btnMaakAan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMaakAan.Location = new System.Drawing.Point(249, 29);
+            this.btnMaakAan.Location = new System.Drawing.Point(197, 29);
             this.btnMaakAan.Name = "btnMaakAan";
             this.btnMaakAan.Size = new System.Drawing.Size(75, 23);
             this.btnMaakAan.TabIndex = 1;
@@ -61,7 +61,7 @@
             // btnVerander
             // 
             this.btnVerander.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnVerander.Location = new System.Drawing.Point(249, 58);
+            this.btnVerander.Location = new System.Drawing.Point(197, 58);
             this.btnVerander.Name = "btnVerander";
             this.btnVerander.Size = new System.Drawing.Size(75, 23);
             this.btnVerander.TabIndex = 2;
@@ -72,7 +72,7 @@
             // btnVerwijder
             // 
             this.btnVerwijder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnVerwijder.Location = new System.Drawing.Point(249, 87);
+            this.btnVerwijder.Location = new System.Drawing.Point(197, 87);
             this.btnVerwijder.Name = "btnVerwijder";
             this.btnVerwijder.Size = new System.Drawing.Size(75, 23);
             this.btnVerwijder.TabIndex = 3;
@@ -91,8 +91,8 @@
             // 
             // btnprint
             // 
-            this.btnprint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnprint.Location = new System.Drawing.Point(249, 163);
+            this.btnprint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnprint.Location = new System.Drawing.Point(197, 166);
             this.btnprint.Name = "btnprint";
             this.btnprint.Size = new System.Drawing.Size(75, 23);
             this.btnprint.TabIndex = 6;
@@ -104,15 +104,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(336, 198);
+            this.ClientSize = new System.Drawing.Size(284, 202);
             this.Controls.Add(this.btnprint);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnVerwijder);
             this.Controls.Add(this.btnVerander);
             this.Controls.Add(this.btnMaakAan);
             this.Controls.Add(this.lbxWerknemers);
+            this.MinimumSize = new System.Drawing.Size(300, 241);
             this.Name = "StartMenu";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Werknemer Menu";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

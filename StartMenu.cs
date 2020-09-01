@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +22,14 @@ namespace MaandelijkseLonenPW1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-            Werknemer jack = new Werknemer("Jack Michelson","Male",new DateTime(1958,8,29), "95.02.01-002.00","BE12 1234 5678 9100", new DateTime(2015, 09, 07)) ;
-            Programmeur pieter = new Programmeur("Pieter Janssens","Man", new DateTime(1991,01,12), "91.01.12-018.31", "BE01 9876 5432 1234", new DateTime(2018, 7,18),true);
+
+            Werknemer jack = new Werknemer("Jack Michelson", "Man", new DateTime(1958, 8, 29), "95.02.01-002.00", "BE12 1234 5678 9100", new DateTime(2015, 09, 07));
+            Programmeur pieter = new Programmeur("Pieter Janssens", "Man", new DateTime(1991, 01, 12), "91.01.12-018.31", "BE01 9876 5432 1234", new DateTime(2018, 7, 18), true);
+            CostumerSupport karel = new CostumerSupport("Karel Pieters","Vrouw", new DateTime(1991, 01, 12), "95.02.01-002.00", "BE12 1234 5678 9100", new DateTime(2015, 09, 07));
 
             werknemers.Add(jack);
             werknemers.Add(pieter);
+            werknemers.Add(karel);
 
             LaadWerknemers();
         }
@@ -39,7 +42,7 @@ namespace MaandelijkseLonenPW1
 
         private void btnVerwijder_Click(object sender, EventArgs e)
         {
-            if (lbxWerknemers != null)
+            if (lbxWerknemers != null && lbxWerknemers.SelectedIndex != null)
             {
                 werknemers.RemoveAt(lbxWerknemers.SelectedIndex);
             }
@@ -48,7 +51,7 @@ namespace MaandelijkseLonenPW1
 
         private void btnVerander_Click(object sender, EventArgs e)
         {
-            if (lbxWerknemers != null)
+            if (lbxWerknemers != null && lbxWerknemers.SelectedIndex != null)
             {
                 WerknemerForm werknemer = new WerknemerForm(lbxWerknemers.SelectedItem as Werknemer);
                 if (werknemer.ShowDialog() == DialogResult.OK)
@@ -73,7 +76,67 @@ namespace MaandelijkseLonenPW1
 
         private void btnprint_Click(object sender, EventArgs e)
         {
+            if (lbxWerknemers.SelectedItem != null)
+            {
+                Werknemer werknemer = (lbxWerknemers.SelectedItem as Werknemer);
+                string filename = $"LOONBRIEF {werknemer.naam} {werknemer.rijksregisternummer.Replace(".", "")} {DateTime.Now.ToString("MM-yyyy")}.txt";
+                File.Delete(filename);
+                using (StreamWriter writer = new StreamWriter(filename))
+                {
+                    writer.WriteLine(new string('-', 50));
+                    writer.WriteLine($"LOONBRIEF {DateTime.Now.ToString("MMMM yyyy").ToUpper()}");
+                    writer.WriteLine(new string('-', 50));
+                    writer.WriteLine($"NAAM\t\t\t\t\t\t: {werknemer.naam}");
+                    writer.WriteLine($"RIJKSREGISTERNUMMER\t\t\t: {werknemer.rijksregisternummer}");
+                    writer.WriteLine($"GESLACHT\t\t\t\t\t: {werknemer.geslacht}");
+                    writer.WriteLine($"GEBOORTEDATUM\t\t\t\t: {werknemer.geboorteDatum.ToString("dd MMMM yyyy")}");
+                    writer.WriteLine($"DATUM INDIENSTTREDING\t\t: {werknemer.datumVanIndiesttreding.ToString("dd MMMM yyyy")}");
+                    writer.WriteLine($"FUNCTIE\t\t\t\t\t\t: {werknemer.GetType().Name}");
+                    writer.WriteLine($"AANTAL GEPRESTEERDE UREN\t: {werknemer.gepresteerdeUren}/38");
+                    if (werknemer.GetType().Name == "Programmeur")
+                    {
+                        writer.Write($"BEDRIJFSWAGEN\t\t\t\t: ");
+                        if ((werknemer as Programmeur).bedrijfswagen)
+                        {
+                            writer.WriteLine("JA");
+                        }
+                        else
+                        {
+                            writer.WriteLine("NEE");
+                        }
+                    }
+                    writer.WriteLine(new string('-', 50));
 
+                    //string startloon = Math.Round(werknemer.StartloonBerekening(), 2).ToString();
+                    //string.Format("{0:0,##}", startloon);
+                    writer.WriteLine($"STARTLOON\t\t\t\t\t:   € {ShowDouble(werknemer.StartloonBerekening())}");
+                    writer.WriteLine($"ANCIËNNITEIT\t\t\t\t: + € {ShowDouble(werknemer.Ancienniteit())}");
+                    writer.WriteLine($"\t\t\t\t\t\t\t:   € {ShowDouble(werknemer.LoonNaAncienniteitBerekening())}");
+                    writer.WriteLine($"SOCIALE ZEKERHEID\t\t\t: - € {ShowDouble(werknemer.LoonNaAncienniteitBerekening() - werknemer.LoonNaSocialeZekerheid())}");
+                    writer.WriteLine($"\t\t\t\t\t\t\t:   € {ShowDouble(werknemer.LoonNaSocialeZekerheid())}");
+                    writer.WriteLine($"BEDRIJFSVOORHEFFING\t\t\t: - € {ShowDouble(werknemer.Bedrijfsvoorheffing())}");
+                    writer.WriteLine($"\t\t\t\t\t\t\t:   € {ShowDouble(werknemer.LoonNaBedrijfsvoorheffing())}");
+                    if (werknemer.GetType().Name.ToLower().Contains("support"))
+                    {
+                        writer.WriteLine($"THUISWERKBONUS\t\t\t\t: + € {ShowDouble(50)}");
+                        if (werknemer.GetType().Name.ToLower() == "costumersupport")
+                        {
+                            writer.WriteLine($"OPLEIDING\t\t\t\t\t: + € {ShowDouble(19.5)}");
+                        }
+
+                    }
+
+                    writer.WriteLine($"NETTOLOON\t\t\t\t\t:   € {ShowDouble(werknemer.BerekenNettoLoon())}");
+                }
+
+                readtextfile readtextfile = new readtextfile(filename);
+                readtextfile.ShowDialog();
+                
+            }
+        }
+        public string ShowDouble(double myNumber)
+        {
+            return myNumber.ToString("0.00").PadLeft(7, ' ');
         }
     }
 }

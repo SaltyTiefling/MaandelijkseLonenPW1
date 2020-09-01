@@ -33,54 +33,59 @@ namespace MaandelijkseLonenPW1
             cbxFunctie.Items.Add("IT support");
             cbxFunctie.Items.Add("Costumer support");
 
-            txtNaam.Text = werknemer.naam;
-            txtRijsknr.Text = werknemer.rijksregisternummer;
-            txtIban.Text = werknemer.iban;
-            switch (werknemer.geslacht.ToLower())
+            if (werknemer != null)
             {
-                case "man":
-                    rbMan.Checked = true;
-                    break;
-                case "vrouw":
-                    rbVrouw.Checked = true;
-                    break;
-                default:
-                    rbAndere.Checked = true;
-                    txtAnderGeslacht.Text = werknemer.geslacht;
-                    break;
-            }
-            dtpGeboorte.Value = werknemer.geboorteDatum;
-            dtpIndienst.Value = werknemer.datumVanIndiesttreding;
-            //combobox
-            switch (werknemer.GetType().Name.ToLower())
-            {
-                case "werknemer":
-                    cbxFunctie.SelectedItem = "Werknemer";
-                    break;
-                case "programmeur":
-                    cbxFunctie.SelectedItem = "Programmeur";
-                    break;
-                case "support":
-                    cbxFunctie.SelectedItem = "Support";
-                    break;
-                case "itsupport":
-                    cbxFunctie.SelectedItem = "IT support";
-                    break;
-                case "costumersupport":
-                    cbxFunctie.SelectedItem = "Costumer support";
-                    break;
-                default:
-                    cbxFunctie.SelectedIndex = 0;
-                    break;
-            }
-            cbxFunctie_SelectedIndexChanged(sender,e);
-            numUren.Value = werknemer.gepresteerdeUren;
-            //checkbox auto
-            if (werknemer.GetType().Name.ToLower() == "programmeur")
-            {
-               checkWagen.Checked = (werknemer as Programmeur).bedrijfswagen;
-            }
 
+                this.Text = "Pas werknemer aan";
+                txtNaam.Text = werknemer.naam;
+                txtNaam.Enabled = false;
+                txtRijsknr.Text = werknemer.rijksregisternummer;
+                txtIban.Text = werknemer.iban;
+                switch (werknemer.geslacht.ToLower())
+                {
+                    case "man":
+                        rbMan.Checked = true;
+                        break;
+                    case "vrouw":
+                        rbVrouw.Checked = true;
+                        break;
+                    default:
+                        rbAndere.Checked = true;
+                        txtAnderGeslacht.Text = werknemer.geslacht;
+                        break;
+                }
+                dtpGeboorte.Value = werknemer.geboorteDatum;
+                dtpIndienst.Value = werknemer.datumVanIndiesttreding;
+                //combobox
+                switch (werknemer.GetType().Name.ToLower())
+                {
+                    case "werknemer":
+                        cbxFunctie.SelectedItem = "Werknemer";
+                        break;
+                    case "programmeur":
+                        cbxFunctie.SelectedItem = "Programmeur";
+                        break;
+                    case "support":
+                        cbxFunctie.SelectedItem = "Support";
+                        break;
+                    case "itsupport":
+                        cbxFunctie.SelectedItem = "IT support";
+                        break;
+                    case "costumersupport":
+                        cbxFunctie.SelectedItem = "Costumer support";
+                        break;
+                    default:
+                        cbxFunctie.SelectedIndex = 0;
+                        break;
+                }
+                cbxFunctie_SelectedIndexChanged(sender, e);
+                numUren.Value = werknemer.gepresteerdeUren;
+                //checkbox auto
+                if (werknemer.GetType().Name.ToLower() == "programmeur")
+                {
+                    checkWagen.Checked = (werknemer as Programmeur).bedrijfswagen;
+                }
+            }
         }
 
         private void cbxFunctie_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,7 +113,7 @@ namespace MaandelijkseLonenPW1
                 epUren.Clear();
             }
 
-            if (!Regex.IsMatch(txtIban.Text, @"[A-Z][A-Z]\d{2} \d{4} \d{4} \d{4}"))
+            if (!Regex.IsMatch(txtIban.Text, @"[A-Z][A-Z]\d{2} \d{4} \d{4} \d{4}$"))
             {
                 epIBAN.SetError(txtIban, "geef een geldig IBAN in (bv. BE12 1234 5678 9100)");
                 result = false;
@@ -118,7 +123,7 @@ namespace MaandelijkseLonenPW1
                 epIBAN.Clear();
             }
 
-            if (!Regex.IsMatch(txtRijsknr.Text, @"\d{2}.\d{2}.\d{2}-\d{3}.\d{2}"))
+            if (!Regex.IsMatch(txtRijsknr.Text, @"\d{2}.\d{2}.\d{2}-\d{3}.\d{2}$"))
             {
                 EPRijksregister.SetError(txtRijsknr, "geef een geldig rijksregisternummer in (bv. 95.02.01-002.00)");
                 result = false;

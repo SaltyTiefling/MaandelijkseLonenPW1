@@ -16,7 +16,6 @@ namespace MaandelijkseLonenPW1
 
         public override double BerekenNettoLoon()
         {
-            
             return base.BerekenNettoLoon() + 50;
         }
     }
