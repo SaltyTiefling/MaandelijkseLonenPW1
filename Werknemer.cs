@@ -8,13 +8,13 @@ namespace MaandelijkseLonenPW1
 {
     public class Werknemer
     {
-        string naam;
-        string geslacht;
-        DateTime geboorteDatum;
-        string rijksregisternummer;
+        public string naam;
+        public string geslacht;
+        public DateTime geboorteDatum;
+        public string rijksregisternummer;
         public DateTime datumVanIndiesttreding;
-        string iban;
-        double startloon;
+        public string iban;
+        public double startloon;
         public int gepresteerdeUren;
 
         public Werknemer(string naam, string geslacht, DateTime geboorteDatum, string rijksregisternummer, string iban,
@@ -27,19 +27,22 @@ namespace MaandelijkseLonenPW1
             this.datumVanIndiesttreding = datumVanIndiesttreding;
             this.iban = iban;
             this.startloon = startloon;
-            this.gepresteerdeUren = gepresteerdeUren; 
+            this.gepresteerdeUren = gepresteerdeUren;
         }
 
         public virtual double StartloonBerekening()
         {
-            return gepresteerdeUren/38 * startloon;
+            return gepresteerdeUren / 38 * startloon;
         }
 
         public virtual double LoonNaAncienniteitBerekening()
         {
             double ancienniteit = StartloonBerekening();
+            DateTime zeroTime = new DateTime(1, 1, 1);
+            TimeSpan span = DateTime.Now - datumVanIndiesttreding;
+            int years = (zeroTime + span).Year - 1;
 
-            for (int i = 1; i <= (DateTime.Now.Year - datumVanIndiesttreding.Year); i++)
+            for (int i = 1; i <= years; i++)
             {
                 ancienniteit *= 1.01;
             }
@@ -57,7 +60,7 @@ namespace MaandelijkseLonenPW1
             return LoonNaAncienniteitBerekening() - 200;
         }
 
-        public virtual double Bedrijfsvoorheffing( )
+        public virtual double Bedrijfsvoorheffing()
         {
             return LoonNaSocialeZekerheid() * 0.1368;
         }

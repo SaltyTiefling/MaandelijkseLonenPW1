@@ -23,7 +23,7 @@ namespace MaandelijkseLonenPW1
         {
             
             Werknemer jack = new Werknemer("Jack Michelson","Male",new DateTime(1958,8,29), "95.02.01-002.00","BE12 1234 5678 9100", new DateTime(2015, 09, 07)) ;
-            Programmeur pieter = new Programmeur("Pieter Janssens","Man", new DateTime(1991,01,12),"910112-18-31","BE01 9876 5432 1234", new DateTime(2018, 7,18),true);
+            Programmeur pieter = new Programmeur("Pieter Janssens","Man", new DateTime(1991,01,12), "91.01.12-018.31", "BE01 9876 5432 1234", new DateTime(2018, 7,18),true);
 
             werknemers.Add(jack);
             werknemers.Add(pieter);
@@ -50,8 +50,12 @@ namespace MaandelijkseLonenPW1
         {
             if (lbxWerknemers != null)
             {
-
-
+                WerknemerForm werknemer = new WerknemerForm(lbxWerknemers.SelectedItem as Werknemer);
+                if (werknemer.ShowDialog() == DialogResult.OK)
+                {
+                    btnVerwijder_Click(sender, e);
+                    werknemers.Add(werknemer.werknemer);
+                }
             }
             LaadWerknemers();
         }
@@ -61,10 +65,15 @@ namespace MaandelijkseLonenPW1
             WerknemerForm nieuwewerknemer = new WerknemerForm();
             if (nieuwewerknemer.ShowDialog() == DialogResult.OK)
             {
-                
+                werknemers.Add(nieuwewerknemer.werknemer);
             }
 
             LaadWerknemers();
+        }
+
+        private void btnprint_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
