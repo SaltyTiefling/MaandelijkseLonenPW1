@@ -32,7 +32,8 @@ namespace MaandelijkseLonenPW1
 
         public virtual double StartloonBerekening()
         {
-            return gepresteerdeUren / 38 * startloon;
+            double gewerkt = (double)gepresteerdeUren/38;
+            return gewerkt * startloon;
         }
 
         public virtual double LoonNaAncienniteitBerekening()

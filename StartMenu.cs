@@ -23,7 +23,7 @@ namespace MaandelijkseLonenPW1
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            Werknemer jack = new Werknemer("Jack Michelson", "Man", new DateTime(1958, 8, 29), "95.02.01-002.00", "BE12 1234 5678 9100", new DateTime(2015, 09, 07));
+            Werknemer jack = new Werknemer("Jack Michelson", "Man", new DateTime(1958, 8, 29), "95.02.01-002.00", "BE12 1234 5678 9100", new DateTime(2015, 09, 07), gepresteerdeUren: 19) ;
             Programmeur pieter = new Programmeur("Pieter Janssens", "Man", new DateTime(1991, 01, 12), "91.01.12-018.31", "BE01 9876 5432 1234", new DateTime(2018, 7, 18), true);
             CostumerSupport karel = new CostumerSupport("Karel Pieters","Vrouw", new DateTime(1991, 01, 12), "95.02.01-002.00", "BE12 1234 5678 9100", new DateTime(2015, 09, 07));
 
@@ -107,8 +107,6 @@ namespace MaandelijkseLonenPW1
                     }
                     writer.WriteLine(new string('-', 50));
 
-                    //string startloon = Math.Round(werknemer.StartloonBerekening(), 2).ToString();
-                    //string.Format("{0:0,##}", startloon);
                     writer.WriteLine($"STARTLOON\t\t\t\t\t:   € {ShowDouble(werknemer.StartloonBerekening())}");
                     writer.WriteLine($"ANCIËNNITEIT\t\t\t\t: + € {ShowDouble(werknemer.Ancienniteit())}");
                     writer.WriteLine($"\t\t\t\t\t\t\t:   € {ShowDouble(werknemer.LoonNaAncienniteitBerekening())}");
