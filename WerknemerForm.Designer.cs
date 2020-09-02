@@ -42,8 +42,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtNaam = new System.Windows.Forms.TextBox();
-            this.txtRijsknr = new System.Windows.Forms.TextBox();
-            this.txtIban = new System.Windows.Forms.TextBox();
             this.dtpGeboorte = new System.Windows.Forms.DateTimePicker();
             this.dtpIndienst = new System.Windows.Forms.DateTimePicker();
             this.cbxFunctie = new System.Windows.Forms.ComboBox();
@@ -55,6 +53,8 @@
             this.EPRijksregister = new System.Windows.Forms.ErrorProvider(this.components);
             this.epAnderGeslacht = new System.Windows.Forms.ErrorProvider(this.components);
             this.epNaam = new System.Windows.Forms.ErrorProvider(this.components);
+            this.txtRijsknr = new System.Windows.Forms.MaskedTextBox();
+            this.txtIban = new System.Windows.Forms.MaskedTextBox();
             this.gbGeslacht.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUren)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.epIBAN)).BeginInit();
@@ -104,7 +104,7 @@
             this.gbGeslacht.Location = new System.Drawing.Point(15, 84);
             this.gbGeslacht.Name = "gbGeslacht";
             this.gbGeslacht.Size = new System.Drawing.Size(236, 100);
-            this.gbGeslacht.TabIndex = 6;
+            this.gbGeslacht.TabIndex = 4;
             this.gbGeslacht.TabStop = false;
             this.gbGeslacht.Text = "Geslacht:";
             // 
@@ -116,7 +116,7 @@
             this.txtAnderGeslacht.Location = new System.Drawing.Point(75, 64);
             this.txtAnderGeslacht.Name = "txtAnderGeslacht";
             this.txtAnderGeslacht.Size = new System.Drawing.Size(138, 20);
-            this.txtAnderGeslacht.TabIndex = 4;
+            this.txtAnderGeslacht.TabIndex = 8;
             this.txtAnderGeslacht.TextChanged += new System.EventHandler(this.txtAnderGeslacht_TextChanged);
             // 
             // rbAndere
@@ -125,7 +125,7 @@
             this.rbAndere.Location = new System.Drawing.Point(7, 67);
             this.rbAndere.Name = "rbAndere";
             this.rbAndere.Size = new System.Drawing.Size(62, 17);
-            this.rbAndere.TabIndex = 3;
+            this.rbAndere.TabIndex = 7;
             this.rbAndere.Text = "Andere:";
             this.rbAndere.UseVisualStyleBackColor = true;
             this.rbAndere.CheckedChanged += new System.EventHandler(this.rbAndere_CheckedChanged);
@@ -136,7 +136,7 @@
             this.rbVrouw.Location = new System.Drawing.Point(7, 44);
             this.rbVrouw.Name = "rbVrouw";
             this.rbVrouw.Size = new System.Drawing.Size(55, 17);
-            this.rbVrouw.TabIndex = 2;
+            this.rbVrouw.TabIndex = 6;
             this.rbVrouw.Text = "Vrouw";
             this.rbVrouw.UseVisualStyleBackColor = true;
             // 
@@ -147,7 +147,7 @@
             this.rbMan.Location = new System.Drawing.Point(7, 20);
             this.rbMan.Name = "rbMan";
             this.rbMan.Size = new System.Drawing.Size(46, 17);
-            this.rbMan.TabIndex = 1;
+            this.rbMan.TabIndex = 5;
             this.rbMan.TabStop = true;
             this.rbMan.Text = "Man";
             this.rbMan.UseVisualStyleBackColor = true;
@@ -195,28 +195,8 @@
             this.txtNaam.Location = new System.Drawing.Point(131, 6);
             this.txtNaam.Name = "txtNaam";
             this.txtNaam.Size = new System.Drawing.Size(120, 20);
-            this.txtNaam.TabIndex = 12;
+            this.txtNaam.TabIndex = 1;
             this.txtNaam.TextChanged += new System.EventHandler(this.txtNaam_TextChanged);
-            // 
-            // txtRijsknr
-            // 
-            this.txtRijsknr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRijsknr.Location = new System.Drawing.Point(131, 32);
-            this.txtRijsknr.Name = "txtRijsknr";
-            this.txtRijsknr.Size = new System.Drawing.Size(120, 20);
-            this.txtRijsknr.TabIndex = 13;
-            this.txtRijsknr.TextChanged += new System.EventHandler(this.txtRijsknr_TextChanged);
-            // 
-            // txtIban
-            // 
-            this.txtIban.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtIban.Location = new System.Drawing.Point(131, 58);
-            this.txtIban.Name = "txtIban";
-            this.txtIban.Size = new System.Drawing.Size(120, 20);
-            this.txtIban.TabIndex = 14;
-            this.txtIban.TextChanged += new System.EventHandler(this.txtIban_TextChanged);
             // 
             // dtpGeboorte
             // 
@@ -227,7 +207,7 @@
             this.dtpGeboorte.Location = new System.Drawing.Point(131, 191);
             this.dtpGeboorte.Name = "dtpGeboorte";
             this.dtpGeboorte.Size = new System.Drawing.Size(120, 20);
-            this.dtpGeboorte.TabIndex = 15;
+            this.dtpGeboorte.TabIndex = 5;
             // 
             // dtpIndienst
             // 
@@ -238,7 +218,7 @@
             this.dtpIndienst.Location = new System.Drawing.Point(131, 217);
             this.dtpIndienst.Name = "dtpIndienst";
             this.dtpIndienst.Size = new System.Drawing.Size(120, 20);
-            this.dtpIndienst.TabIndex = 16;
+            this.dtpIndienst.TabIndex = 6;
             // 
             // cbxFunctie
             // 
@@ -248,7 +228,7 @@
             this.cbxFunctie.Location = new System.Drawing.Point(131, 243);
             this.cbxFunctie.Name = "cbxFunctie";
             this.cbxFunctie.Size = new System.Drawing.Size(120, 21);
-            this.cbxFunctie.TabIndex = 17;
+            this.cbxFunctie.TabIndex = 7;
             this.cbxFunctie.SelectedIndexChanged += new System.EventHandler(this.cbxFunctie_SelectedIndexChanged);
             // 
             // numUren
@@ -263,7 +243,7 @@
             0});
             this.numUren.Name = "numUren";
             this.numUren.Size = new System.Drawing.Size(120, 20);
-            this.numUren.TabIndex = 18;
+            this.numUren.TabIndex = 8;
             this.numUren.Value = new decimal(new int[] {
             38,
             0,
@@ -278,7 +258,7 @@
             this.checkWagen.Location = new System.Drawing.Point(12, 296);
             this.checkWagen.Name = "checkWagen";
             this.checkWagen.Size = new System.Drawing.Size(134, 17);
-            this.checkWagen.TabIndex = 19;
+            this.checkWagen.TabIndex = 9;
             this.checkWagen.Text = "Bedrijfswagen:             ";
             this.checkWagen.UseVisualStyleBackColor = true;
             // 
@@ -288,7 +268,7 @@
             this.btnOk.Location = new System.Drawing.Point(195, 314);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 20;
+            this.btnOk.TabIndex = 10;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -318,19 +298,39 @@
             this.epNaam.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.epNaam.ContainerControl = this;
             // 
+            // txtRijsknr
+            // 
+            this.txtRijsknr.Location = new System.Drawing.Point(131, 32);
+            this.txtRijsknr.Mask = "00.00.00-000.00";
+            this.txtRijsknr.Name = "txtRijsknr";
+            this.txtRijsknr.Size = new System.Drawing.Size(120, 20);
+            this.txtRijsknr.TabIndex = 2;
+            this.txtRijsknr.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.txtRijsknr_MaskInputRejected);
+            // 
+            // txtIban
+            // 
+            this.txtIban.Location = new System.Drawing.Point(131, 58);
+            this.txtIban.Mask = "AA00 0000 0000 0000";
+            this.txtIban.Name = "txtIban";
+            this.txtIban.Size = new System.Drawing.Size(120, 20);
+            this.txtIban.TabIndex = 3;
+            this.txtIban.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.txtIban_MaskInputRejected);
+            this.txtIban.Enter += new System.EventHandler(this.txtIban_Enter);
+            this.txtIban.Leave += new System.EventHandler(this.txtIban_Leave);
+            // 
             // WerknemerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(282, 349);
+            this.Controls.Add(this.txtIban);
+            this.Controls.Add(this.txtRijsknr);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.checkWagen);
             this.Controls.Add(this.numUren);
             this.Controls.Add(this.cbxFunctie);
             this.Controls.Add(this.dtpIndienst);
             this.Controls.Add(this.dtpGeboorte);
-            this.Controls.Add(this.txtIban);
-            this.Controls.Add(this.txtRijsknr);
             this.Controls.Add(this.txtNaam);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -342,6 +342,7 @@
             this.Controls.Add(this.label1);
             this.MinimumSize = new System.Drawing.Size(298, 388);
             this.Name = "WerknemerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Nieuwe Werknemer";
             this.Load += new System.EventHandler(this.WerknemerForm_Load);
             this.gbGeslacht.ResumeLayout(false);
@@ -372,8 +373,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtNaam;
-        private System.Windows.Forms.TextBox txtRijsknr;
-        private System.Windows.Forms.TextBox txtIban;
         private System.Windows.Forms.DateTimePicker dtpGeboorte;
         private System.Windows.Forms.DateTimePicker dtpIndienst;
         private System.Windows.Forms.ComboBox cbxFunctie;
@@ -385,5 +384,7 @@
         private System.Windows.Forms.ErrorProvider EPRijksregister;
         private System.Windows.Forms.ErrorProvider epAnderGeslacht;
         private System.Windows.Forms.ErrorProvider epNaam;
+        private System.Windows.Forms.MaskedTextBox txtRijsknr;
+        private System.Windows.Forms.MaskedTextBox txtIban;
     }
 }

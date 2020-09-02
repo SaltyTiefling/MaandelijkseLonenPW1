@@ -32,6 +32,8 @@ namespace MaandelijkseLonenPW1
 
         private void readtextfile_Load(object sender, EventArgs e)
         {
+
+
             if (File.Exists(filename))
             {
 

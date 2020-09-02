@@ -44,7 +44,7 @@
             this.lbxWerknemers.FormattingEnabled = true;
             this.lbxWerknemers.Location = new System.Drawing.Point(16, 29);
             this.lbxWerknemers.Name = "lbxWerknemers";
-            this.lbxWerknemers.Size = new System.Drawing.Size(175, 160);
+            this.lbxWerknemers.Size = new System.Drawing.Size(175, 186);
             this.lbxWerknemers.TabIndex = 0;
             // 
             // btnMaakAan
@@ -92,7 +92,7 @@
             // btnprint
             // 
             this.btnprint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnprint.Location = new System.Drawing.Point(197, 166);
+            this.btnprint.Location = new System.Drawing.Point(197, 192);
             this.btnprint.Name = "btnprint";
             this.btnprint.Size = new System.Drawing.Size(75, 23);
             this.btnprint.TabIndex = 6;
@@ -104,7 +104,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 202);
+            this.ClientSize = new System.Drawing.Size(284, 231);
             this.Controls.Add(this.btnprint);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnVerwijder);
@@ -113,7 +113,7 @@
             this.Controls.Add(this.lbxWerknemers);
             this.MinimumSize = new System.Drawing.Size(300, 241);
             this.Name = "StartMenu";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Werknemer Menu";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);

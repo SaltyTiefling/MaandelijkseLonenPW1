@@ -23,9 +23,9 @@ namespace MaandelijkseLonenPW1
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            Werknemer jack = new Werknemer("Jack Michelson", "Man", new DateTime(1958, 8, 29), "95.02.01-002.00", "BE12 1234 5678 9100", new DateTime(2015, 09, 07), gepresteerdeUren: 19) ;
+            Werknemer jack = new Werknemer("Jack Michelson", "Man", new DateTime(1958, 8, 29), "95.02.01-002.00", "NL01 9876 5432 1234", new DateTime(2015, 09, 07), gepresteerdeUren: 19);
             Programmeur pieter = new Programmeur("Pieter Janssens", "Man", new DateTime(1991, 01, 12), "91.01.12-018.31", "BE01 9876 5432 1234", new DateTime(2018, 7, 18), true);
-            CostumerSupport karel = new CostumerSupport("Karel Pieters","Vrouw", new DateTime(1991, 01, 12), "95.02.01-002.00", "BE12 1234 5678 9100", new DateTime(2015, 09, 07));
+            CostumerSupport karel = new CostumerSupport("Karel Pieters", "Vrouw", new DateTime(1991, 01, 12), "95.02.01-002.00", "BE12 1234 5678 9100", new DateTime(2015, 09, 07));
 
             werknemers.Add(jack);
             werknemers.Add(pieter);
@@ -76,26 +76,38 @@ namespace MaandelijkseLonenPW1
 
         private void btnprint_Click(object sender, EventArgs e)
         {
-            if (lbxWerknemers.SelectedItem != null)
+            string totaalkostenBedrijf = "";
+            double loonKosten = 0;
+
+            string mapname = $"LOONBRIEVEN {DateTime.Now.ToString("MMMM yyyy").ToUpper()}\\";
+
+            if (!Directory.Exists(mapname))
             {
-                Werknemer werknemer = (lbxWerknemers.SelectedItem as Werknemer);
-                string filename = $"LOONBRIEF {werknemer.naam} {werknemer.rijksregisternummer.Replace(".", "")} {DateTime.Now.ToString("MM-yyyy")}.txt";
+                Directory.CreateDirectory(mapname);
+            }
+
+            foreach (Werknemer werknemer in werknemers)
+            {
+                string filename = mapname + $"LOONBRIEF {werknemer.naam.ToUpper()} {werknemer.rijksregisternummer.Replace(".", "")} {DateTime.Now.ToString("MM-yyyy")}.txt";
+
                 File.Delete(filename);
+
+
                 using (StreamWriter writer = new StreamWriter(filename))
                 {
                     writer.WriteLine(new string('-', 50));
                     writer.WriteLine($"LOONBRIEF {DateTime.Now.ToString("MMMM yyyy").ToUpper()}");
                     writer.WriteLine(new string('-', 50));
-                    writer.WriteLine($"NAAM\t\t\t\t\t\t: {werknemer.naam}");
-                    writer.WriteLine($"RIJKSREGISTERNUMMER\t\t\t: {werknemer.rijksregisternummer}");
-                    writer.WriteLine($"GESLACHT\t\t\t\t\t: {werknemer.geslacht}");
-                    writer.WriteLine($"GEBOORTEDATUM\t\t\t\t: {werknemer.geboorteDatum.ToString("dd MMMM yyyy")}");
-                    writer.WriteLine($"DATUM INDIENSTTREDING\t\t: {werknemer.datumVanIndiesttreding.ToString("dd MMMM yyyy")}");
-                    writer.WriteLine($"FUNCTIE\t\t\t\t\t\t: {werknemer.GetType().Name}");
-                    writer.WriteLine($"AANTAL GEPRESTEERDE UREN\t: {werknemer.gepresteerdeUren}/38");
+                    writer.WriteLine($"NAAM                     : {werknemer.naam}");
+                    writer.WriteLine($"RIJKSREGISTERNUMMER      : {werknemer.rijksregisternummer}");
+                    writer.WriteLine($"GESLACHT                 : {werknemer.geslacht}");
+                    writer.WriteLine($"GEBOORTEDATUM            : {werknemer.geboorteDatum.ToString("dd MMMM yyyy")}");
+                    writer.WriteLine($"DATUM INDIENSTTREDING    : {werknemer.datumVanIndiesttreding.ToString("dd MMMM yyyy")}");
+                    writer.WriteLine($"FUNCTIE                  : {werknemer.GetType().Name}");
+                    writer.WriteLine($"AANTAL GEPRESTEERDE UREN : {werknemer.gepresteerdeUren}/38");
                     if (werknemer.GetType().Name == "Programmeur")
                     {
-                        writer.Write($"BEDRIJFSWAGEN\t\t\t\t: ");
+                        writer.Write($"BEDRIJFSWAGEN            : ");
                         if ((werknemer as Programmeur).bedrijfswagen)
                         {
                             writer.WriteLine("JA");
@@ -107,33 +119,46 @@ namespace MaandelijkseLonenPW1
                     }
                     writer.WriteLine(new string('-', 50));
 
-                    writer.WriteLine($"STARTLOON\t\t\t\t\t:   € {ShowDouble(werknemer.StartloonBerekening())}");
-                    writer.WriteLine($"ANCIËNNITEIT\t\t\t\t: + € {ShowDouble(werknemer.Ancienniteit())}");
-                    writer.WriteLine($"\t\t\t\t\t\t\t:   € {ShowDouble(werknemer.LoonNaAncienniteitBerekening())}");
-                    writer.WriteLine($"SOCIALE ZEKERHEID\t\t\t: - € {ShowDouble(werknemer.LoonNaAncienniteitBerekening() - werknemer.LoonNaSocialeZekerheid())}");
-                    writer.WriteLine($"\t\t\t\t\t\t\t:   € {ShowDouble(werknemer.LoonNaSocialeZekerheid())}");
-                    writer.WriteLine($"BEDRIJFSVOORHEFFING\t\t\t: - € {ShowDouble(werknemer.Bedrijfsvoorheffing())}");
-                    writer.WriteLine($"\t\t\t\t\t\t\t:   € {ShowDouble(werknemer.LoonNaBedrijfsvoorheffing())}");
+                    writer.WriteLine($"STARTLOON                :   € {ShowDouble(werknemer.StartloonBerekening())}");
+                    writer.WriteLine($"ANCIËNNITEIT             : + € {ShowDouble(werknemer.Ancienniteit())}");
+                    writer.WriteLine($"                         :   € {ShowDouble(werknemer.LoonNaAncienniteitBerekening())}");
+                    writer.WriteLine($"SOCIALE ZEKERHEID        : - € {ShowDouble(werknemer.LoonNaAncienniteitBerekening() - werknemer.LoonNaSocialeZekerheid())}");
+                    writer.WriteLine($"                         :   € {ShowDouble(werknemer.LoonNaSocialeZekerheid())}");
+                    writer.WriteLine($"BEDRIJFSVOORHEFFING      : - € {ShowDouble(werknemer.Bedrijfsvoorheffing())}");
+                    writer.WriteLine($"                         :   € {ShowDouble(werknemer.LoonNaBedrijfsvoorheffing())}");
                     if (werknemer.GetType().Name.ToLower().Contains("support"))
                     {
-                        writer.WriteLine($"THUISWERKBONUS\t\t\t\t: + € {ShowDouble(50)}");
+                        writer.WriteLine($"THUISWERKBONUS           : + € {ShowDouble(50)}");
                         if (werknemer.GetType().Name.ToLower() == "costumersupport")
                         {
-                            writer.WriteLine($"OPLEIDING\t\t\t\t\t: + € {ShowDouble(19.5)}");
+                            writer.WriteLine($"OPLEIDING                : + € {ShowDouble(19.5)}");
                         }
-
                     }
 
-                    writer.WriteLine($"NETTOLOON\t\t\t\t\t:   € {ShowDouble(werknemer.BerekenNettoLoon())}");
+                    writer.WriteLine($"NETTOLOON                :   € {ShowDouble(werknemer.BerekenNettoLoon())}");
+
                 }
 
+                totaalkostenBedrijf += $"{werknemer.naam.PadRight(30, ' ')} + € {ShowDouble(werknemer.BerekenNettoLoon())}\n";
+                loonKosten += werknemer.BerekenNettoLoon();
                 readtextfile readtextfile = new readtextfile(filename);
-                readtextfile.ShowDialog();
-                
+                readtextfile.Show();
             }
+            File.Delete(mapname + $"LOONKOSTEN {DateTime.Now.ToString("MMMM yyyy").ToUpper()}.txt");
+            using (StreamWriter writer = new StreamWriter(mapname + $"LOONKOSTEN {DateTime.Now.ToString("MMMM yyyy").ToUpper()}.txt"))
+            {
+                writer.WriteLine("naam".PadRight(30, ' ') + $"   Nettoloon");
+
+                writer.WriteLine(new string('-', 42));
+                writer.Write(totaalkostenBedrijf);
+                writer.WriteLine(new string('-', 42));
+                writer.WriteLine($"{("totaal:").PadRight(30, ' ')} : € {ShowDouble(loonKosten)}");
+            }
+
         }
         public string ShowDouble(double myNumber)
         {
+
             return myNumber.ToString("0.00").PadLeft(7, ' ');
         }
     }

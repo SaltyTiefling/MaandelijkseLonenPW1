@@ -33,6 +33,7 @@ namespace MaandelijkseLonenPW1
             cbxFunctie.Items.Add("IT support");
             cbxFunctie.Items.Add("Costumer support");
 
+
             if (werknemer != null)
             {
 
@@ -74,9 +75,6 @@ namespace MaandelijkseLonenPW1
                     case "costumersupport":
                         cbxFunctie.SelectedItem = "Costumer support";
                         break;
-                    default:
-                        cbxFunctie.SelectedIndex = 0;
-                        break;
                 }
                 cbxFunctie_SelectedIndexChanged(sender, e);
                 numUren.Value = werknemer.gepresteerdeUren;
@@ -86,6 +84,8 @@ namespace MaandelijkseLonenPW1
                     checkWagen.Checked = (werknemer as Programmeur).bedrijfswagen;
                 }
             }
+            cbxFunctie.SelectedIndex = 0;
+            NoErrors();
         }
 
         private void cbxFunctie_SelectedIndexChanged(object sender, EventArgs e)
@@ -102,7 +102,7 @@ namespace MaandelijkseLonenPW1
         private bool NoErrors()
         {
             bool result = true;
-           
+
             if (cbxFunctie.SelectedItem == "IT support" && numUren.Value < 38)
             {
                 epUren.SetError(numUren, "Een IT support medewerker mag niet minder dan voltijds (38u) per week werken");
@@ -135,7 +135,7 @@ namespace MaandelijkseLonenPW1
 
             if (txtNaam.Text == string.Empty)
             {
-                epNaam.SetError(txtNaam,"geef naam in");
+                epNaam.SetError(txtNaam, "geef naam in");
                 result = false;
             }
             else
@@ -145,7 +145,7 @@ namespace MaandelijkseLonenPW1
 
             if (rbAndere.Checked == true && txtAnderGeslacht.Text == string.Empty)
             {
-                epAnderGeslacht.SetError(txtAnderGeslacht,"geef je geslacht in");
+                epAnderGeslacht.SetError(txtAnderGeslacht, "geef je geslacht in");
                 result = false;
             }
             else
@@ -189,23 +189,23 @@ namespace MaandelijkseLonenPW1
             switch (cbxFunctie.SelectedItem.ToString().ToLower())
             {
                 default:
-                    werknemer = new Werknemer(txtNaam.Text,geslacht,dtpGeboorte.Value,txtRijsknr.Text,txtIban.Text,
-                        dtpGeboorte.Value,gepresteerdeUren: (int)numUren.Value);
+                    werknemer = new Werknemer(txtNaam.Text, geslacht, dtpGeboorte.Value, txtRijsknr.Text.Replace(',','.'), txtIban.Text,
+                        dtpGeboorte.Value, gepresteerdeUren: (int)numUren.Value);
                     break;
                 case "programmeur":
-                    werknemer = new Programmeur(txtNaam.Text, geslacht, dtpGeboorte.Value, txtRijsknr.Text, txtIban.Text,
+                    werknemer = new Programmeur(txtNaam.Text, geslacht, dtpGeboorte.Value, txtRijsknr.Text.Replace(',', '.'), txtIban.Text,
                         dtpGeboorte.Value, checkWagen.Checked, gepresteerdeUren: (int)numUren.Value);
                     break;
                 case "support":
-                    werknemer = new Support(txtNaam.Text, geslacht, dtpGeboorte.Value, txtRijsknr.Text, txtIban.Text,
+                    werknemer = new Support(txtNaam.Text, geslacht, dtpGeboorte.Value, txtRijsknr.Text.Replace(',', '.'), txtIban.Text,
                         dtpGeboorte.Value, gepresteerdeUren: (int)numUren.Value);
                     break;
                 case "it support":
-                    werknemer = new ITSupport(txtNaam.Text, geslacht, dtpGeboorte.Value, txtRijsknr.Text, txtIban.Text,
+                    werknemer = new ITSupport(txtNaam.Text, geslacht, dtpGeboorte.Value, txtRijsknr.Text.Replace(',', '.'), txtIban.Text,
                         dtpGeboorte.Value);
                     break;
                 case "costumer support":
-                    werknemer = new CostumerSupport(txtNaam.Text, geslacht, dtpGeboorte.Value, txtRijsknr.Text, txtIban.Text,
+                    werknemer = new CostumerSupport(txtNaam.Text, geslacht, dtpGeboorte.Value, txtRijsknr.Text.Replace(',', '.'), txtIban.Text,
                         dtpGeboorte.Value, gepresteerdeUren: (int)numUren.Value);
                     break;
             }
@@ -214,6 +214,27 @@ namespace MaandelijkseLonenPW1
         }
 
         private void txtNaam_TextChanged(object sender, EventArgs e)
+        {
+            NoErrors();
+        }
+
+
+        private void txtIban_Enter(object sender, EventArgs e)
+        {
+            NoErrors();
+        }
+
+        private void txtIban_Leave(object sender, EventArgs e)
+        {
+            NoErrors();
+        }
+
+        private void txtIban_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+            NoErrors();
+        }
+
+        private void txtRijsknr_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
             NoErrors();
         }
