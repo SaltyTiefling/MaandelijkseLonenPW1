@@ -92,6 +92,7 @@ namespace MaandelijkseLonenPW1
 
                 File.Delete(filename);
 
+                double werknemerbonussen = 0;
 
                 using (StreamWriter writer = new StreamWriter(filename))
                 {
@@ -129,9 +130,11 @@ namespace MaandelijkseLonenPW1
                     if (werknemer.GetType().Name.ToLower().Contains("support"))
                     {
                         writer.WriteLine($"THUISWERKBONUS           : + € {ShowDouble(50)}");
+                        werknemerbonussen += 50;
                         if (werknemer.GetType().Name.ToLower() == "costumersupport")
                         {
                             writer.WriteLine($"OPLEIDING                : + € {ShowDouble(19.5)}");
+                            werknemerbonussen += 50;
                         }
                     }
 
@@ -139,8 +142,8 @@ namespace MaandelijkseLonenPW1
 
                 }
 
-                totaalkostenBedrijf += $"{werknemer.naam.PadRight(30, ' ')} + € {ShowDouble(werknemer.BerekenNettoLoon())}\n";
-                loonKosten += werknemer.BerekenNettoLoon();
+                loonKosten += werknemer.LoonNaAncienniteitBerekening() + werknemerbonussen;
+                totaalkostenBedrijf += $"{werknemer.naam.PadRight(30, ' ')} + € {ShowDouble(werknemer.LoonNaAncienniteitBerekening() + werknemerbonussen)}\n";
                 readtextfile readtextfile = new readtextfile(filename);
                 readtextfile.Show();
             }
