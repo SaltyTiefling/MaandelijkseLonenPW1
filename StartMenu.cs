@@ -101,6 +101,7 @@ namespace MaandelijkseLonenPW1
                     writer.WriteLine(new string('-', 50));
                     writer.WriteLine($"NAAM                     : {werknemer.naam}");
                     writer.WriteLine($"RIJKSREGISTERNUMMER      : {werknemer.rijksregisternummer}");
+                    writer.WriteLine($"IBAN-NUMBER              : {werknemer.iban}");
                     writer.WriteLine($"GESLACHT                 : {werknemer.geslacht}");
                     writer.WriteLine($"GEBOORTEDATUM            : {werknemer.geboorteDatum.ToString("dd MMMM yyyy")}");
                     writer.WriteLine($"DATUM INDIENSTTREDING    : {werknemer.datumVanIndiesttreding.ToString("dd MMMM yyyy")}");
@@ -134,7 +135,7 @@ namespace MaandelijkseLonenPW1
                         if (werknemer.GetType().Name.ToLower() == "costumersupport")
                         {
                             writer.WriteLine($"OPLEIDING                : + € {ShowDouble(19.5)}");
-                            werknemerbonussen += 50;
+                            werknemerbonussen += 19.5;
                         }
                     }
 
@@ -144,7 +145,7 @@ namespace MaandelijkseLonenPW1
 
                 loonKosten += werknemer.LoonNaAncienniteitBerekening() + werknemerbonussen;
                 totaalkostenBedrijf += $"{werknemer.naam.PadRight(30, ' ')} + € {ShowDouble(werknemer.LoonNaAncienniteitBerekening() + werknemerbonussen)}\n";
-                readtextfile readtextfile = new readtextfile(filename);
+                readtextfile readtextfile = new readtextfile(filename,mapname);
                 readtextfile.Show();
             }
             File.Delete(mapname + $"LOONKOSTEN {DateTime.Now.ToString("MMMM yyyy").ToUpper()}.txt");

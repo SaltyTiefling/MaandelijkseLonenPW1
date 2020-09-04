@@ -14,8 +14,10 @@ namespace MaandelijkseLonenPW1
     public partial class readtextfile : Form
     {
         string filename;
-        public readtextfile(string filename)
+        string path;
+        public readtextfile(string filename, string path)
         {
+            this.path = path;
             this.filename = filename;
             InitializeComponent();
         }
@@ -32,7 +34,7 @@ namespace MaandelijkseLonenPW1
 
         private void readtextfile_Load(object sender, EventArgs e)
         {
-
+            this.Text = filename.Replace(path,"");
 
             if (File.Exists(filename))
             {
